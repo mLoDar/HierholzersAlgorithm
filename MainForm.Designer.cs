@@ -147,6 +147,7 @@
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Hierholzer's Algorithm";
+            Click += MainForm_Click;
             ResumeLayout(false);
             PerformLayout();
         }
