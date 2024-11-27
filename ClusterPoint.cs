@@ -1,5 +1,4 @@
 ﻿using System.Drawing.Drawing2D;
-using System.Windows.Forms;
 
 
 
@@ -67,13 +66,6 @@ namespace HierholzersAlgorithm
             }
 
             TextRenderer.DrawText(paintEventArgs.Graphics, Text, Font, ClientRectangle, ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
-        }
-
-        protected override void OnMouseDown(MouseEventArgs mouseEventArgs)
-        {
-            base.OnMouseDown(mouseEventArgs);
-
-            MainForm.ClusterPoint_Click(this, mouseEventArgs);
         }
     }
 }

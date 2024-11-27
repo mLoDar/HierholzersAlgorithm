@@ -46,9 +46,21 @@ namespace HierholzersAlgorithm
             }
         }
 
+        private void ClusterPoint_Click(object sender, EventArgs e)
+        {
+            ClusterPoint clickedClusterPoint = (ClusterPoint)sender;
+            MouseEventArgs mouseEventArgs = (MouseEventArgs)e;
+
+            if (mouseEventArgs.Button == MouseButtons.Right)
+            {
+                _clusterPoints.Remove(clickedClusterPoint);
+                this.Controls.Remove(clickedClusterPoint);
+                clickedClusterPoint.Dispose();
+            }
+        }
 
 
-        private static bool ClickedOutsideRestrictedArea(Point clickLocation)
+        private bool ClickedOutsideRestrictedArea(Point clickLocation)
         {
             if (clickLocation.X < _restrictedArea.X && clickLocation.Y < _restrictedArea.Y)
             {
@@ -58,7 +70,7 @@ namespace HierholzersAlgorithm
             return false;
         }
 
-        private static string AddNewPoint(MainForm mainForm, Point clickLocation)
+        private string AddNewPoint(MainForm mainForm, Point clickLocation)
         {
             try
             {
@@ -75,6 +87,8 @@ namespace HierholzersAlgorithm
                     Location = new Point(clickLocation.X - pointDiameter / 2, clickLocation.Y - pointDiameter / 2)
                 };
 
+                clusterPoint.MouseDown += ClusterPoint_Click;
+
                 mainForm.Controls.Add(clusterPoint);
                 _clusterPoints.Add(clusterPoint);
             }
@@ -86,7 +100,7 @@ namespace HierholzersAlgorithm
             return string.Empty;
         }
 
-        private static int GetHighestClusterPointId()
+        private int GetHighestClusterPointId()
         {
             int highestId = 0;
 
@@ -99,18 +113,6 @@ namespace HierholzersAlgorithm
             }
 
             return highestId;
-        }
-
-        internal static void ClusterPoint_Click(object sender, EventArgs e)
-        {
-            ClusterPoint clickedClusterPoint = (ClusterPoint)sender;
-            MouseEventArgs mouseEventArgs = (MouseEventArgs)e;
-
-            if (mouseEventArgs.Button == MouseButtons.Right)
-            {
-                _clusterPoints.Remove(clickedClusterPoint);
-                clickedClusterPoint.Dispose();
-            }
         }
     }
 }
