@@ -100,5 +100,17 @@ namespace HierholzersAlgorithm
 
             return highestId;
         }
+
+        internal static void ClusterPoint_Click(object sender, EventArgs e)
+        {
+            ClusterPoint clickedClusterPoint = (ClusterPoint)sender;
+            MouseEventArgs mouseEventArgs = (MouseEventArgs)e;
+
+            if (mouseEventArgs.Button == MouseButtons.Right)
+            {
+                _clusterPoints.Remove(clickedClusterPoint);
+                clickedClusterPoint.Dispose();
+            }
+        }
     }
 }

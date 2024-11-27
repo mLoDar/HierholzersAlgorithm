@@ -1,4 +1,5 @@
 ﻿using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 
 
 
@@ -72,11 +73,7 @@ namespace HierholzersAlgorithm
         {
             base.OnMouseDown(mouseEventArgs);
 
-            if (mouseEventArgs.Button == MouseButtons.Right)
-            {
-                this.Dispose();
-                MainForm._clusterPoints.Remove(this);
-            }
+            MainForm.ClusterPoint_Click(this, mouseEventArgs);
         }
     }
 }
