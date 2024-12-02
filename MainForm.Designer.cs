@@ -32,7 +32,6 @@
             ButtonSaveStructure = new Button();
             ButtonRenamePoint = new Button();
             ButtonRecolorPoint = new Button();
-            ButtonDeleteObject = new Button();
             LabelHeaderBackup = new Label();
             LabelHeaderEdit = new Label();
             LabelHeaderInformation = new Label();
@@ -42,10 +41,9 @@
             // ButtonLoadStructure
             // 
             ButtonLoadStructure.Font = new Font("Microsoft Sans Serif", 8.25F);
-            ButtonLoadStructure.Location = new Point(26, 80);
-            ButtonLoadStructure.Margin = new Padding(3, 2, 3, 2);
+            ButtonLoadStructure.Location = new Point(30, 107);
             ButtonLoadStructure.Name = "ButtonLoadStructure";
-            ButtonLoadStructure.Size = new Size(131, 30);
+            ButtonLoadStructure.Size = new Size(150, 40);
             ButtonLoadStructure.TabIndex = 2;
             ButtonLoadStructure.Text = "Load structure";
             ButtonLoadStructure.UseVisualStyleBackColor = true;
@@ -53,10 +51,9 @@
             // ButtonSaveStructure
             // 
             ButtonSaveStructure.Font = new Font("Microsoft Sans Serif", 8.25F);
-            ButtonSaveStructure.Location = new Point(26, 45);
-            ButtonSaveStructure.Margin = new Padding(3, 2, 3, 2);
+            ButtonSaveStructure.Location = new Point(30, 60);
             ButtonSaveStructure.Name = "ButtonSaveStructure";
-            ButtonSaveStructure.Size = new Size(131, 30);
+            ButtonSaveStructure.Size = new Size(150, 40);
             ButtonSaveStructure.TabIndex = 1;
             ButtonSaveStructure.Text = "Save structure";
             ButtonSaveStructure.UseVisualStyleBackColor = true;
@@ -64,10 +61,9 @@
             // ButtonRenamePoint
             // 
             ButtonRenamePoint.Font = new Font("Microsoft Sans Serif", 8.25F);
-            ButtonRenamePoint.Location = new Point(26, 183);
-            ButtonRenamePoint.Margin = new Padding(3, 2, 3, 2);
+            ButtonRenamePoint.Location = new Point(30, 244);
             ButtonRenamePoint.Name = "ButtonRenamePoint";
-            ButtonRenamePoint.Size = new Size(131, 30);
+            ButtonRenamePoint.Size = new Size(150, 40);
             ButtonRenamePoint.TabIndex = 5;
             ButtonRenamePoint.Text = "Rename point";
             ButtonRenamePoint.UseVisualStyleBackColor = true;
@@ -75,32 +71,20 @@
             // ButtonRecolorPoint
             // 
             ButtonRecolorPoint.Font = new Font("Microsoft Sans Serif", 8.25F);
-            ButtonRecolorPoint.Location = new Point(26, 148);
-            ButtonRecolorPoint.Margin = new Padding(3, 2, 3, 2);
+            ButtonRecolorPoint.Location = new Point(30, 197);
             ButtonRecolorPoint.Name = "ButtonRecolorPoint";
-            ButtonRecolorPoint.Size = new Size(131, 30);
+            ButtonRecolorPoint.Size = new Size(150, 40);
             ButtonRecolorPoint.TabIndex = 4;
             ButtonRecolorPoint.Text = "Recolor point";
             ButtonRecolorPoint.UseVisualStyleBackColor = true;
-            // 
-            // ButtonDeleteObject
-            // 
-            ButtonDeleteObject.Font = new Font("Microsoft Sans Serif", 8.25F);
-            ButtonDeleteObject.Location = new Point(26, 218);
-            ButtonDeleteObject.Margin = new Padding(3, 2, 3, 2);
-            ButtonDeleteObject.Name = "ButtonDeleteObject";
-            ButtonDeleteObject.Size = new Size(131, 30);
-            ButtonDeleteObject.TabIndex = 6;
-            ButtonDeleteObject.Text = "Delete object";
-            ButtonDeleteObject.UseVisualStyleBackColor = true;
             // 
             // LabelHeaderBackup
             // 
             LabelHeaderBackup.AutoSize = true;
             LabelHeaderBackup.Font = new Font("Microsoft Sans Serif", 12F);
-            LabelHeaderBackup.Location = new Point(26, 25);
+            LabelHeaderBackup.Location = new Point(30, 33);
             LabelHeaderBackup.Name = "LabelHeaderBackup";
-            LabelHeaderBackup.Size = new Size(67, 20);
+            LabelHeaderBackup.Size = new Size(84, 25);
             LabelHeaderBackup.TabIndex = 0;
             LabelHeaderBackup.Text = "Backup:";
             // 
@@ -108,9 +92,9 @@
             // 
             LabelHeaderEdit.AutoSize = true;
             LabelHeaderEdit.Font = new Font("Microsoft Sans Serif", 12F);
-            LabelHeaderEdit.Location = new Point(26, 128);
+            LabelHeaderEdit.Location = new Point(30, 171);
             LabelHeaderEdit.Name = "LabelHeaderEdit";
-            LabelHeaderEdit.Size = new Size(108, 20);
+            LabelHeaderEdit.Size = new Size(131, 25);
             LabelHeaderEdit.TabIndex = 3;
             LabelHeaderEdit.Text = "Edit structure:";
             // 
@@ -118,38 +102,35 @@
             // 
             LabelHeaderInformation.AutoSize = true;
             LabelHeaderInformation.Font = new Font("Microsoft Sans Serif", 12F);
-            LabelHeaderInformation.Location = new Point(26, 268);
+            LabelHeaderInformation.Location = new Point(30, 309);
             LabelHeaderInformation.Name = "LabelHeaderInformation";
-            LabelHeaderInformation.Size = new Size(94, 20);
+            LabelHeaderInformation.Size = new Size(114, 25);
             LabelHeaderInformation.TabIndex = 7;
             LabelHeaderInformation.Text = "Information:";
             // 
             // ButtonHelp
             // 
             ButtonHelp.Font = new Font("Microsoft Sans Serif", 8.25F);
-            ButtonHelp.Location = new Point(26, 289);
-            ButtonHelp.Margin = new Padding(3, 2, 3, 2);
+            ButtonHelp.Location = new Point(30, 337);
             ButtonHelp.Name = "ButtonHelp";
-            ButtonHelp.Size = new Size(131, 30);
+            ButtonHelp.Size = new Size(150, 40);
             ButtonHelp.TabIndex = 8;
             ButtonHelp.Text = "Help";
             ButtonHelp.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(684, 347);
+            ClientSize = new Size(782, 413);
             Controls.Add(ButtonHelp);
             Controls.Add(LabelHeaderInformation);
             Controls.Add(LabelHeaderEdit);
             Controls.Add(LabelHeaderBackup);
-            Controls.Add(ButtonDeleteObject);
             Controls.Add(ButtonRecolorPoint);
             Controls.Add(ButtonRenamePoint);
             Controls.Add(ButtonSaveStructure);
             Controls.Add(ButtonLoadStructure);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "MainForm";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
@@ -165,7 +146,6 @@
         private Button ButtonLoadStructure;
         private Button ButtonRecolorPoint;
         private Button ButtonRenamePoint;
-        private Button ButtonDeleteObject;
         private Button ButtonHelp;
         private Label LabelHeaderBackup;
         private Label LabelHeaderEdit;

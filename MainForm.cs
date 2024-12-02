@@ -27,6 +27,8 @@ namespace HierholzersAlgorithm
             foreach (ClusterEdge clusterEdge in _clusterEdges)
             {
                 clusterEdge.Draw(e.Graphics);
+
+                this.Invalidate();
             }
         }
 
