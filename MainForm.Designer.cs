@@ -77,6 +77,7 @@
             ButtonRecolorPoint.TabIndex = 4;
             ButtonRecolorPoint.Text = "Recolor point";
             ButtonRecolorPoint.UseVisualStyleBackColor = true;
+            ButtonRecolorPoint.Click += ButtonRecolorPoint_Click;
             // 
             // LabelHeaderBackup
             // 

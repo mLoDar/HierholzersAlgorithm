@@ -27,8 +27,6 @@ namespace HierholzersAlgorithm
             foreach (ClusterEdge clusterEdge in _clusterEdges)
             {
                 clusterEdge.Draw(e.Graphics);
-
-                this.Invalidate();
             }
         }
 
@@ -58,12 +56,15 @@ namespace HierholzersAlgorithm
                 }
             }
 
+            this.Invalidate();
 
 
 
             if (clickButton == MouseButtons.Left)
             {
                 string processResult = AddNewPoint(clickLocation);
+
+                this.Invalidate();
 
                 if (processResult.Equals(string.Empty) == false)
                 {
@@ -82,6 +83,7 @@ namespace HierholzersAlgorithm
                 {
                     _clusterEdges.Remove(clickedEdge);
                     this.Controls.Remove(clickedEdge);
+
                     this.Invalidate();
                 }
             }
@@ -95,6 +97,8 @@ namespace HierholzersAlgorithm
             if (mouseEventArgs.Button == MouseButtons.Right)
             {
                 RemoveExisitingPoint(clickedClusterPoint);
+                this.Invalidate();
+
                 return;
             }
 
@@ -104,6 +108,9 @@ namespace HierholzersAlgorithm
                 {
                     _selectedEdgeStartPoint = null;
                     clickedClusterPoint.BackColor = _selectedEdgeStartPointOriginalColor;
+
+                    this.Invalidate();
+
                     return;
                 }
 
@@ -131,6 +138,8 @@ namespace HierholzersAlgorithm
                         clickedClusterPoint.BackColor = Color.FromArgb(r, g, b);
                     }
 
+                    this.Invalidate();
+
                     return;
                 }
 
@@ -149,6 +158,8 @@ namespace HierholzersAlgorithm
 
                 string processResult = AddNewEdge(_selectedEdgeStartPoint, clickedClusterPoint);
 
+                this.Invalidate();
+
                 if (processResult.Equals(string.Empty) == false)
                 {
                     string text = processResult;
@@ -160,6 +171,31 @@ namespace HierholzersAlgorithm
                 }
 
                 _selectedEdgeStartPoint.BackColor = _selectedEdgeStartPointOriginalColor;
+                _selectedEdgeStartPoint = null;
+
+                this.Invalidate();
+            }
+        }
+
+        private void ButtonRecolorPoint_Click(object sender, EventArgs e)
+        {
+            if (_selectedEdgeStartPoint == null)
+            {
+                string text = "You need to select a valid cluster point first.";
+                string caption = "Failed to recolor a point!";
+
+                MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            using ColorDialog colorDialog = new();
+
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                _selectedEdgeStartPoint.BackColor = colorDialog.Color;
+                _selectedEdgeStartPointOriginalColor = colorDialog.Color;
+
                 _selectedEdgeStartPoint = null;
             }
         }
@@ -225,8 +261,6 @@ namespace HierholzersAlgorithm
 
                 this.Controls.Add(clusterEdge);
                 _clusterEdges.Add(clusterEdge);
-
-                this.Invalidate();
             }
             catch (Exception exception)
             {
@@ -295,8 +329,6 @@ namespace HierholzersAlgorithm
             _clusterPoints.Remove(clickedClusterPoint);
             this.Controls.Remove(clickedClusterPoint);
             clickedClusterPoint.Dispose();
-
-            this.Invalidate();
         }
 
         private static bool EdgeAlreadyExists(ClusterPoint startPoint, ClusterPoint endPoint)
