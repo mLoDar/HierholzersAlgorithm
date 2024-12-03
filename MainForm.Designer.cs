@@ -67,6 +67,7 @@
             ButtonRenamePoint.TabIndex = 5;
             ButtonRenamePoint.Text = "Rename point";
             ButtonRenamePoint.UseVisualStyleBackColor = true;
+            ButtonRenamePoint.Click += ButtonRenamePoint_Click;
             // 
             // ButtonRecolorPoint
             // 

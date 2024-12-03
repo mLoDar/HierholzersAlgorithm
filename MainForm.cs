@@ -1,3 +1,9 @@
+using Microsoft.VisualBasic;
+
+
+
+
+
 namespace HierholzersAlgorithm
 {
     public partial class MainForm : Form
@@ -241,6 +247,39 @@ namespace HierholzersAlgorithm
 
                 _selectedEdgeStartPoint = null;
             }
+        }
+
+        private void ButtonRenamePoint_Click(object sender, EventArgs e)
+        {
+            if (_selectedEdgeStartPoint == null)
+            {
+                string text = "You need to select a valid cluster point first.";
+                string caption = "Failed to rename a point!";
+
+                MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
+
+
+            string newClusterPointName = Interaction.InputBox("Enter a new name:", "Renaming cluster point");
+
+            if (string.IsNullOrWhiteSpace(newClusterPointName))
+            {
+                string text = "An invalid name was provided.";
+                string caption = "Failed to rename a point!";
+
+                MessageBox.Show(text, caption, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
+            _selectedEdgeStartPoint.Name = newClusterPointName;
+            _selectedEdgeStartPoint.Text = newClusterPointName;
+            _selectedEdgeStartPoint.BackColor = _selectedEdgeStartPointOriginalColor;
+
+            _selectedEdgeStartPoint = null;
         }
 
 
