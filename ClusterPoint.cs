@@ -11,6 +11,10 @@ namespace HierholzersAlgorithm
         private int _pointId = 0;
         private int _cornerRadius = 0;
 
+        private bool _draggingPoint = false;
+        private Point _locationOffset;
+        internal Point locationOnMouseDown;
+
 
 
         internal int PointId
@@ -41,6 +45,13 @@ namespace HierholzersAlgorithm
 
 
 
+        internal ClusterPoint()
+        {
+            this.MouseDown += ClusterPoint_MouseDown;
+            this.MouseMove += ClusterPoint_MouseMove;
+            this.MouseUp += ClusterPoint_MouseUp;
+        }
+
         protected override void OnPaint(PaintEventArgs paintEventArgs)
         {
             base.OnPaint(paintEventArgs);
@@ -66,6 +77,31 @@ namespace HierholzersAlgorithm
             }
 
             TextRenderer.DrawText(paintEventArgs.Graphics, Text, Font, ClientRectangle, ForeColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+        }
+
+        private void ClusterPoint_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                _draggingPoint = true;
+                _locationOffset = new Point(e.X, e.Y);
+            }
+        }
+
+        private void ClusterPoint_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_draggingPoint)
+            {
+                int newX = this.Left + (e.X - _locationOffset.X);
+                int newY = this.Top + (e.Y - _locationOffset.Y);
+
+                this.Location = new Point(newX, newY);
+            }
+        }
+
+        private void ClusterPoint_MouseUp(object sender, MouseEventArgs e)
+        {
+            _draggingPoint = false;
         }
     }
 }

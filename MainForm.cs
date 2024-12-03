@@ -89,7 +89,7 @@ namespace HierholzersAlgorithm
             }
         }
 
-        private void ClusterPoint_Click(object sender, EventArgs e)
+        private void ClusterPoint_MouseDown(object sender, EventArgs e)
         {
             ClusterPoint clickedClusterPoint = (ClusterPoint)sender;
             MouseEventArgs mouseEventArgs = (MouseEventArgs)e;
@@ -104,6 +104,8 @@ namespace HierholzersAlgorithm
 
             if (mouseEventArgs.Button == MouseButtons.Left)
             {
+                clickedClusterPoint.locationOnMouseDown = clickedClusterPoint.Location;
+
                 if (_selectedEdgeStartPoint == clickedClusterPoint)
                 {
                     _selectedEdgeStartPoint = null;
@@ -177,6 +179,47 @@ namespace HierholzersAlgorithm
             }
         }
 
+        private void ClusterPoint_MouseUp(object sender, EventArgs e)
+        {
+            ClusterPoint clickedClusterPoint = (ClusterPoint)sender;
+
+            if (clickedClusterPoint.locationOnMouseDown != clickedClusterPoint.Location)
+            {
+                _selectedEdgeStartPoint = null;
+                clickedClusterPoint.BackColor = _selectedEdgeStartPointOriginalColor;
+
+                this.Invalidate();
+
+                return;
+            }
+        }
+
+        private void ClusterPoint_MouseMove(object sender, EventArgs e)
+        {
+            ClusterPoint clickedClusterPoint = (ClusterPoint)sender;
+
+            for (int i = 0; i < _clusterEdges.Count; i++)
+            {
+                ClusterEdge clusterEdge = _clusterEdges[i];
+
+                if (clusterEdge.startPoint.PointId == clickedClusterPoint.PointId)
+                {
+                    clusterEdge.startPoint = clickedClusterPoint;
+                    _clusterEdges[i] = clusterEdge;
+                    continue;
+                }
+
+                if (clusterEdge.endPoint.PointId == clickedClusterPoint.PointId)
+                {
+                    clusterEdge.endPoint = clickedClusterPoint;
+                    _clusterEdges[i] = clusterEdge;
+                    continue;
+                }
+            }
+
+            this.Invalidate();
+        }
+
         private void ButtonRecolorPoint_Click(object sender, EventArgs e)
         {
             if (_selectedEdgeStartPoint == null)
@@ -202,16 +245,6 @@ namespace HierholzersAlgorithm
 
 
 
-        private static bool ClickedOutsideRestrictedArea(Point clickLocation)
-        {
-            if (clickLocation.X < _restrictedArea.X && clickLocation.Y < _restrictedArea.Y)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
         private string AddNewPoint(Point clickLocation)
         {
             try
@@ -229,7 +262,9 @@ namespace HierholzersAlgorithm
                     Location = new Point(clickLocation.X - pointDiameter / 2, clickLocation.Y - pointDiameter / 2)
                 };
 
-                clusterPoint.MouseDown += ClusterPoint_Click;
+                clusterPoint.MouseDown += ClusterPoint_MouseDown;
+                clusterPoint.MouseUp += ClusterPoint_MouseUp;
+                clusterPoint.MouseMove += ClusterPoint_MouseMove;
 
                 this.Controls.Add(clusterPoint);
                 _clusterPoints.Add(clusterPoint);
@@ -246,12 +281,9 @@ namespace HierholzersAlgorithm
         {
             try
             {
-                Point startLocation = new(startPoint.Location.X + startPoint.Width / 2, startPoint.Location.Y + startPoint.Height / 2);
-                Point endLocation = new(endPoint.Location.X + endPoint.Width / 2, endPoint.Location.Y + endPoint.Height / 2);
-
                 int newId = GetHighestClusterEdgeId() + 1;
 
-                ClusterEdge clusterEdge = new(startPoint, endPoint, startLocation, endLocation)
+                ClusterEdge clusterEdge = new(startPoint, endPoint)
                 {
                     EdgeId = newId,
                     Name = newId.ToString(),
@@ -300,18 +332,28 @@ namespace HierholzersAlgorithm
             return highestId;
         }
 
+        private static bool ClickedOutsideRestrictedArea(Point clickLocation)
+        {
+            if (clickLocation.X < _restrictedArea.X && clickLocation.Y < _restrictedArea.Y)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         private void RemoveExisitingPoint(ClusterPoint clickedClusterPoint)
         {
             List<ClusterEdge> edgesToRemove = [];
 
             foreach (ClusterEdge clusterEdge in _clusterEdges)
             {
-                if (clusterEdge._startPoint.PointId == clickedClusterPoint.PointId)
+                if (clusterEdge.startPoint.PointId == clickedClusterPoint.PointId)
                 {
                     edgesToRemove.Add(clusterEdge);
                 }
 
-                if (clusterEdge._EndPoint.PointId == clickedClusterPoint.PointId)
+                if (clusterEdge.endPoint.PointId == clickedClusterPoint.PointId)
                 {
                     edgesToRemove.Add(clusterEdge);
                 }
@@ -335,12 +377,12 @@ namespace HierholzersAlgorithm
         {
             foreach (ClusterEdge clusterEdge in _clusterEdges)
             {
-                if (clusterEdge._startPoint.PointId == startPoint.PointId && clusterEdge._EndPoint.PointId == endPoint.PointId)
+                if (clusterEdge.startPoint.PointId == startPoint.PointId && clusterEdge.endPoint.PointId == endPoint.PointId)
                 {
                     return true;
                 }
 
-                if (clusterEdge._startPoint.PointId == endPoint.PointId && clusterEdge._EndPoint.PointId == startPoint.PointId)
+                if (clusterEdge.startPoint.PointId == endPoint.PointId && clusterEdge.endPoint.PointId == startPoint.PointId)
                 {
                     return true;
                 }
