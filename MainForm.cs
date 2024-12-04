@@ -282,6 +282,28 @@ namespace HierholzersAlgorithm
             _selectedEdgeStartPoint = null;
         }
 
+        private void ButtonSaveStructure_Click(object sender, EventArgs e)
+        {
+            SavefileHandler savefileHandler = new();
+
+            string informationText = "The current cluster was successfully saved!";
+            string informationCaption = "Success";
+
+            string saveProcessResult = savefileHandler.SaveCluster(_clusterPoints, _clusterEdges);
+
+            if (saveProcessResult.Equals(string.Empty) == false)
+            {
+                informationText = saveProcessResult;
+                informationCaption = "Error";
+
+                MessageBox.Show(informationText, informationCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return;
+            }
+
+            MessageBox.Show(informationText, informationCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
 
 
         private string AddNewPoint(Point clickLocation)
