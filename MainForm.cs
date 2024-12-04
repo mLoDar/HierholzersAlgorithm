@@ -296,6 +296,8 @@ namespace HierholzersAlgorithm
                     Name = newId.ToString(),
                     Text = newId.ToString(),
                     BackColor = Color.Cyan,
+                    AutoSize = true,
+                    Padding = new Padding(5),
                     CornerRadius = pointDiameter,
                     Size = new Size(pointDiameter, pointDiameter),
                     Location = new Point(clickLocation.X - pointDiameter / 2, clickLocation.Y - pointDiameter / 2)
