@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using HierholzersAlgorithm.ClusterElements;
+
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 
@@ -9,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 
 
-namespace HierholzersAlgorithm
+namespace HierholzersAlgorithm.Scripts
 {
     class SavefileHandler
     {

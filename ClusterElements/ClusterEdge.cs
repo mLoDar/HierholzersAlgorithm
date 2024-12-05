@@ -4,7 +4,7 @@
 
 
 
-namespace HierholzersAlgorithm
+namespace HierholzersAlgorithm.ClusterElements
 {
     internal class ClusterEdge : Control
     {
@@ -58,7 +58,7 @@ namespace HierholzersAlgorithm
 
             if (edgeLength == 0)
             {
-                return clickLocation == this.startLocation;
+                return clickLocation == startLocation;
             }
 
             float deltaX = endLocation.X - startLocation.X;

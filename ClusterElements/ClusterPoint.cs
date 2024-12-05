@@ -4,7 +4,7 @@
 
 
 
-namespace HierholzersAlgorithm
+namespace HierholzersAlgorithm.ClusterElements
 {
     internal class ClusterPoint : Button
     {
@@ -47,9 +47,9 @@ namespace HierholzersAlgorithm
 
         internal ClusterPoint()
         {
-            this.MouseDown += ClusterPoint_MouseDown;
-            this.MouseMove += ClusterPoint_MouseMove;
-            this.MouseUp += ClusterPoint_MouseUp;
+            MouseDown += ClusterPoint_MouseDown;
+            MouseMove += ClusterPoint_MouseMove;
+            MouseUp += ClusterPoint_MouseUp;
         }
 
         protected override void OnPaint(PaintEventArgs paintEventArgs)
@@ -64,9 +64,9 @@ namespace HierholzersAlgorithm
             graphicsPath.AddArc(0, Height - _cornerRadius - 1, _cornerRadius, _cornerRadius, 90, 90);
             graphicsPath.CloseFigure();
 
-            this.Region = new Region(graphicsPath);
+            Region = new Region(graphicsPath);
 
-            using (SolidBrush solidBrush = new(this.BackColor))
+            using (SolidBrush solidBrush = new(BackColor))
             {
                 paintEventArgs.Graphics.FillPath(solidBrush, graphicsPath);
             }
@@ -92,10 +92,10 @@ namespace HierholzersAlgorithm
         {
             if (_draggingPoint)
             {
-                int newX = this.Left + (e.X - _locationOffset.X);
-                int newY = this.Top + (e.Y - _locationOffset.Y);
+                int newX = Left + (e.X - _locationOffset.X);
+                int newY = Top + (e.Y - _locationOffset.Y);
 
-                this.Location = new Point(newX, newY);
+                Location = new Point(newX, newY);
             }
         }
 

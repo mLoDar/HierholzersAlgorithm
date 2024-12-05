@@ -1,4 +1,4 @@
-﻿namespace HierholzersAlgorithm
+﻿namespace HierholzersAlgorithm.Scripts
 {
     internal class ColorConverter
     {

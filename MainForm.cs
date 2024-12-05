@@ -1,3 +1,6 @@
+using HierholzersAlgorithm.Scripts;
+using HierholzersAlgorithm.ClusterElements;
+
 using Microsoft.VisualBasic;
 
 

@@ -57,6 +57,7 @@
             ButtonSaveStructure.TabIndex = 1;
             ButtonSaveStructure.Text = "Save structure";
             ButtonSaveStructure.UseVisualStyleBackColor = true;
+            ButtonSaveStructure.Click += ButtonSaveStructure_Click;
             // 
             // ButtonRenamePoint
             // 
