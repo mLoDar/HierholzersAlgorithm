@@ -142,9 +142,9 @@ namespace HierholzersAlgorithm
                     }
                     else
                     {
-                        int r = Math.Min(currentPointColor.R + 50, 0);
-                        int g = Math.Min(currentPointColor.G + 50, 0);
-                        int b = Math.Min(currentPointColor.B + 50, 0);
+                        int r = Math.Min(currentPointColor.R + 50, 255);
+                        int g = Math.Min(currentPointColor.G + 50, 255);
+                        int b = Math.Min(currentPointColor.B + 50, 255);
 
                         clickedClusterPoint.BackColor = Color.FromArgb(r, g, b);
                     }
