@@ -47,6 +47,7 @@
             ButtonLoadStructure.TabIndex = 2;
             ButtonLoadStructure.Text = "Load structure";
             ButtonLoadStructure.UseVisualStyleBackColor = true;
+            ButtonLoadStructure.Click += ButtonLoadStructure_Click;
             // 
             // ButtonSaveStructure
             // 

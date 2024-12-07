@@ -9,7 +9,7 @@ namespace HierholzersAlgorithm.ClusterElements
     internal class ClusterPoint : Button
     {
         private int _pointId = 0;
-        private int _cornerRadius = 0;
+        private int _cornerRadius = 50;
 
         private bool _draggingPoint = false;
         private Point _locationOffset;

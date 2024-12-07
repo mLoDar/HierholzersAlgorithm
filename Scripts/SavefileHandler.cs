@@ -102,5 +102,98 @@ namespace HierholzersAlgorithm.Scripts
 
             return string.Empty;
         }
+
+        internal (List<ClusterPoint>, List<ClusterEdge>, string) LoadCluster()
+        {
+            List<ClusterPoint> clusterPoints = [];
+            List<ClusterEdge> clusterEdges = [];
+
+            
+
+            OpenFileDialog openFileDialog = new()
+            {
+                InitialDirectory = _folderAppData,
+                Filter = "JSON Files (*.json)|*.json"
+            };
+
+            if (openFileDialog.ShowDialog() != DialogResult.OK)
+            {
+                string error = "The file selection was cancelled.";
+                return (clusterPoints, clusterEdges, error);
+            }
+
+            string selectedFilePath = openFileDialog.FileName;
+            string jsonClusterStructure = File.ReadAllText(selectedFilePath);
+
+
+
+            JObject clusterStructure = [];
+
+            try
+            {
+                clusterStructure = JObject.Parse(jsonClusterStructure);
+            }
+            catch
+            {
+                string error = "Failed to parse the selected file.\r\nPlease ensure that the formatting within the save file is correct.";
+                return (clusterPoints, clusterEdges, error);
+            }
+            
+            JArray jsonClusterPoints = clusterStructure["clusterPoints"] as JArray ?? [];
+            JArray jsonClusterEdges = clusterStructure["clusterEdges"] as JArray ?? [];
+
+
+
+            for (int i = 0; i < jsonClusterPoints.Count; i++)
+            {
+                ClusterPoint clusterPoint = new()
+                {
+                    AutoSize = true,
+                    Padding = new Padding(5),
+                    PointId = (int)jsonClusterPoints[i].SelectToken("pointId"),
+                    Name = (string)jsonClusterPoints[i].SelectToken("pointName"),
+                    Text = (string)jsonClusterPoints[i].SelectToken("pointText"),
+                    BackColor = _colorConvertor.HexToColor((string)jsonClusterPoints[i].SelectToken("pointColorInHex")),
+                    Location = new Point((int)jsonClusterPoints[i].SelectToken("pointLocationX"), (int)jsonClusterPoints[i].SelectToken("pointLocationY")),
+                };
+
+                clusterPoints.Add(clusterPoint);
+            }
+            
+            for (int i = 0; i < jsonClusterEdges.Count; i++)
+            {
+                ClusterPoint edgeStart = new();
+                ClusterPoint edgeEnd = new();
+
+                int edgeStartId = (int)jsonClusterEdges[i].SelectToken("edgeStartPointId");
+                int edgeEndId = (int)jsonClusterEdges[i].SelectToken("edgeEndPointId");
+
+                for (int j = 0; j < clusterPoints.Count; j++)
+                {
+                    if (clusterPoints[j].PointId == edgeStartId)
+                    {
+                        edgeStart = clusterPoints[j];
+                        continue;
+                    }
+
+                    if (clusterPoints[j].PointId == edgeEndId)
+                    {
+                        edgeEnd = clusterPoints[j];
+                        continue;
+                    }
+                }
+
+                ClusterEdge clusterEdge = new(edgeStart, edgeEnd)
+                {
+                    EdgeId = (int)jsonClusterEdges[i].SelectToken("edgeId"),
+                    startLocation = new((int)jsonClusterEdges[i].SelectToken("edgeStartLocationX"), (int)jsonClusterEdges[i].SelectToken("edgeStartLocationY")),
+                    endLocation = new((int)jsonClusterEdges[i].SelectToken("edgeEndLocationX"), (int)jsonClusterEdges[i].SelectToken("edgeEndLocationY"))
+                };
+
+                clusterEdges.Add(clusterEdge);
+            }
+
+            return (clusterPoints, clusterEdges, string.Empty);
+        }
     }
 }

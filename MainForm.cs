@@ -287,6 +287,15 @@ namespace HierholzersAlgorithm
 
         private void ButtonSaveStructure_Click(object sender, EventArgs e)
         {
+            if (_clusterPoints.Count <= 0)
+            {
+                MessageBox.Show("Please add at least one cluster point before saving!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                return;
+            }
+
+
+
             SavefileHandler savefileHandler = new();
 
             string informationText = "The current cluster was successfully saved!";
@@ -303,6 +312,61 @@ namespace HierholzersAlgorithm
 
                 return;
             }
+
+            MessageBox.Show(informationText, informationCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void ButtonLoadStructure_Click(object sender, EventArgs e)
+        {
+            SavefileHandler savefileHandler = new();
+
+            string informationText = $"Successfully loaded {0} points and {0} edges from the save file!";
+            string informationCaption = "Success";
+
+            (List<ClusterPoint> loadedClusterPoints, List<ClusterEdge> loadedClusterEdges, string error) loadProcessResult = savefileHandler.LoadCluster();
+
+            if (loadProcessResult.error.Equals(string.Empty) == false)
+            {
+                informationText = loadProcessResult.error;
+                informationCaption = "Warning";
+
+                MessageBox.Show(informationText, informationCaption, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                return;
+            }
+
+
+
+            DeleteAllClusterElements();
+
+            this.Invalidate();
+
+
+
+            foreach (ClusterPoint clusterPoint in loadProcessResult.loadedClusterPoints)
+            {
+                clusterPoint.Height = pointDiameter;
+                clusterPoint.CornerRadius = pointDiameter;
+
+                clusterPoint.MouseDown += ClusterPoint_MouseDown;
+                clusterPoint.MouseUp += ClusterPoint_MouseUp;
+                clusterPoint.MouseMove += ClusterPoint_MouseMove;
+
+                _clusterPoints.Add(clusterPoint);
+                this.Controls.Add(clusterPoint);
+            }
+
+            foreach (ClusterEdge clusterEdge in loadProcessResult.loadedClusterEdges)
+            {
+                _clusterEdges.Add(clusterEdge);
+                this.Controls.Add(clusterEdge);
+            }
+
+            this.Invalidate();
+
+
+
+            informationText = $"Successfully loaded {loadProcessResult.loadedClusterPoints.Count} points and {loadProcessResult.loadedClusterEdges.Count} edges from the save file!";
 
             MessageBox.Show(informationText, informationCaption, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -455,6 +519,39 @@ namespace HierholzersAlgorithm
             }
 
             return false;
+        }
+
+        private void DeleteAllClusterElements()
+        {
+            List<ClusterPoint> pointsToRemove = [];
+            List<ClusterEdge> edgesToRemove = [];
+
+            foreach (Control control in this.Controls)
+            {
+                if (control is ClusterPoint point)
+                {
+                    pointsToRemove.Add(point);
+                    continue;
+                }
+
+                if (control is ClusterEdge edge)
+                {
+                    edgesToRemove.Add(edge);
+                    continue;
+                }
+            }
+
+            foreach (ClusterPoint clusterPoint in pointsToRemove)
+            {
+                _clusterPoints.Remove(clusterPoint);
+                this.Controls.Remove(clusterPoint);
+            }
+
+            foreach (ClusterEdge clusterEdge in edgesToRemove)
+            {
+                _clusterEdges.Remove(clusterEdge);
+                this.Controls.Remove(clusterEdge);
+            }
         }
     }
 }
